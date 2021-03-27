@@ -1,0 +1,297 @@
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTodos (20210324214517)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "todos" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "created_by" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210324214517"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateItems (20210324214609)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "done" boolean, "todo_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c01e6b449d"
+FOREIGN KEY ("todo_id")
+  REFERENCES "todos" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_items_on_todo_id" ON "items" ("todo_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210324214609"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-03-24 21:46:20.672798"], ["updated_at", "2021-03-24 21:46:20.672798"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/todos" for ::1 at 2021-03-24 22:00:30 +0000
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 110ms (ActiveRecord: 0.0ms | Allocations: 38202)
+
+
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007feda4e10c78>):
+  
+app/controllers/todos_controller.rb:7:in `index'
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/todos" for ::1 at 2021-03-24 22:01:28 +0000
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 126ms (ActiveRecord: 0.0ms | Allocations: 36536)
+
+
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007feda4e558a0>):
+  
+app/controllers/todos_controller.rb:7:in `index'
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Started POST "/todos" for ::1 at 2021-03-24 22:01:46 +0000
+Processing by TodosController#create as HTML
+  Parameters: {"title"=>"Mozart", "created_by"=>"1", "todo"=>{"title"=>"Mozart", "created_by"=>"1"}}
+[31mUnpermitted parameter: :todo[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[36mTodo Create (1.8ms)[0m  [1m[32mINSERT INTO "todos" ("title", "created_by", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "Mozart"], ["created_by", "1"], ["created_at", "2021-03-24 22:01:46.281108"], ["updated_at", "2021-03-24 22:01:46.281108"]]
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+Completed 500 Internal Server Error in 106ms (ActiveRecord: 4.1ms | Allocations: 41501)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007feda5e250c8>):
+  
+app/controllers/todos_controller.rb:13:in `create'
+Started PUT "/todos/1" for ::1 at 2021-03-24 22:01:59 +0000
+Processing by TodosController#update as HTML
+  Parameters: {"title"=>"Beethoven", "id"=>"1", "todo"=>{"title"=>"Beethoven"}}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:41:in `set_todo'
+[31mUnpermitted parameters: :id, :todo[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+  [1m[36mTodo Update (0.5ms)[0m  [1m[33mUPDATE "todos" SET "title" = ?, "updated_at" = ? WHERE "todos"."id" = ?[0m  [["title", "Beethoven"], ["updated_at", "2021-03-24 22:01:59.057329"], ["id", 1]]
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+Completed 204 No Content in 11ms (ActiveRecord: 2.4ms | Allocations: 3525)
+
+
+Started DELETE "/todos/1" for ::1 at 2021-03-24 22:02:11 +0000
+Processing by TodosController#destroy as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mTodo Load (0.1ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:41:in `set_todo'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[36mItem Load (1.4ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = ?[0m  [["todo_id", 1]]
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[36mTodo Destroy (0.5ms)[0m  [1m[31mDELETE FROM "todos" WHERE "todos"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+Completed 204 No Content in 36ms (ActiveRecord: 4.1ms | Allocations: 8492)
+
+
+Started POST "/todos" for ::1 at 2021-03-24 22:02:16 +0000
+Processing by TodosController#create as HTML
+  Parameters: {"title"=>"Mozart", "created_by"=>"1", "todo"=>{"title"=>"Mozart", "created_by"=>"1"}}
+[31mUnpermitted parameter: :todo[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[36mTodo Create (0.4ms)[0m  [1m[32mINSERT INTO "todos" ("title", "created_by", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["title", "Mozart"], ["created_by", "1"], ["created_at", "2021-03-24 22:02:16.470714"], ["updated_at", "2021-03-24 22:02:16.470714"]]
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+Completed 500 Internal Server Error in 92ms (ActiveRecord: 2.2ms | Allocations: 37999)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007feda4ff58b8>):
+  
+app/controllers/todos_controller.rb:13:in `create'
+Started GET "/todos" for ::1 at 2021-03-24 22:02:21 +0000
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 95ms (ActiveRecord: 0.0ms | Allocations: 36618)
+
+
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007feda8a4d240>):
+  
+app/controllers/todos_controller.rb:7:in `index'
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/" for ::1 at 2021-03-27 11:18:04 +0000
+  [1m[35m (4.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/florian/.rvm/gems/ruby-2.6.1/gems/railties-6.0.3.5/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/florian/.rvm/gems/ruby-2.6.1/gems/railties-6.0.3.5/lib/rails/templates/rails/welcome/index.html.erb (Duration: 11.1ms | Allocations: 316)
+Completed 200 OK in 31ms (Views: 20.7ms | ActiveRecord: 0.0ms | Allocations: 1597)
+
+
+Started GET "/favicon.ico" for ::1 at 2021-03-27 11:18:04 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (6.0.3.5) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.5) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+railties (6.0.3.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.7) lib/puma/configuration.rb:228:in `call'
+puma (4.3.7) lib/puma/server.rb:713:in `handle_request'
+puma (4.3.7) lib/puma/server.rb:472:in `process_client'
+puma (4.3.7) lib/puma/server.rb:328:in `block in run'
+puma (4.3.7) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/" for ::1 at 2021-03-27 11:18:06 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/florian/.rvm/gems/ruby-2.6.1/gems/railties-6.0.3.5/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/florian/.rvm/gems/ruby-2.6.1/gems/railties-6.0.3.5/lib/rails/templates/rails/welcome/index.html.erb (Duration: 8.7ms | Allocations: 192)
+Completed 200 OK in 12ms (Views: 10.0ms | ActiveRecord: 0.0ms | Allocations: 739)
+
+
+Started GET "/todos" for ::1 at 2021-03-27 11:18:46 +0000
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 137ms (ActiveRecord: 0.0ms | Allocations: 41675)
+
+
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007ffcd81f74f8>):
+  
+app/controllers/todos_controller.rb:7:in `index'
+Started GET "/todos" for ::1 at 2021-03-27 11:23:34 +0000
+  [1m[35m (4.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#index as HTML
+Completed 404 Not Found in 14ms (ActiveRecord: 0.7ms | Allocations: 2170)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Todo without an ID):
+  
+app/controllers/todos_controller.rb:42:in `set_todo'
+Started GET "/todos" for ::1 at 2021-03-27 11:24:21 +0000
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Completed 500 Internal Server Error in 94ms (ActiveRecord: 0.0ms | Allocations: 41393)
+
+
+  [1m[36mCACHE Todo Load (0.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007fe75b7aa388>):
+  
+app/controllers/todos_controller.rb:7:in `index'
+Started GET "/todos" for ::1 at 2021-03-27 11:25:19 +0000
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by TodosController#index as HTML
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms | Allocations: 1497)
+
+
+  
+NoMethodError (undefined method `pry' for #<Binding:0x00007fe75e9b1610>
+Did you mean?  try):
+  
+app/controllers/todos_controller.rb:7:in `index'
+Started GET "/todos" for ::1 at 2021-03-27 11:26:48 +0000
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (0.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/todos_controller.rb:7:in `index'
+Completed 500 Internal Server Error in 131300ms (ActiveRecord: 1.0ms | Allocations: 94878)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007fd9456158c0>):
+  
+app/controllers/todos_controller.rb:8:in `index'
+Started GET "/todos/1" for ::1 at 2021-03-27 11:29:20 +0000
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:42:in `set_todo'
+Completed 404 Not Found in 4ms (ActiveRecord: 0.2ms | Allocations: 1051)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Todo with 'id'=1):
+  
+app/controllers/todos_controller.rb:42:in `set_todo'
+  [1m[35m (2.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mTodo Load (0.4ms)[0m  [1m[34mSELECT "todos".* FROM "todos" LIMIT ?[0m  [["LIMIT", 11]]
+Started GET "/todos/2" for ::1 at 2021-03-27 11:30:12 +0000
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTodo Load (0.2ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:42:in `set_todo'
+Completed 500 Internal Server Error in 102ms (ActiveRecord: 0.2ms | Allocations: 36183)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007fd9499fca20>):
+  
+app/controllers/todos_controller.rb:19:in `show'
+Started GET "/todos/2" for ::1 at 2021-03-27 11:39:52 +0000
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTodo Load (0.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:42:in `set_todo'
+Completed 500 Internal Server Error in 93ms (ActiveRecord: 0.3ms | Allocations: 36197)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007fd9416f6720>):
+  
+app/controllers/todos_controller.rb:19:in `show'
+Started GET "/todos/2" for ::1 at 2021-03-27 11:43:26 +0000
+  [1m[35m (2.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTodo Load (2.1ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:44:in `set_todo'
+Completed 500 Internal Server Error in 175ms (ActiveRecord: 3.3ms | Allocations: 42226)
+
+
+  
+NoMethodError (undefined method `json_response' for #<TodosController:0x00007ffe955b0b30>):
+  
+app/controllers/todos_controller.rb:20:in `show'
+Started GET "/todos/2" for ::1 at 2021-03-27 11:43:37 +0000
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:44:in `set_todo'
+Completed 200 OK in 18ms (Views: 1.6ms | ActiveRecord: 2.4ms | Allocations: 5343)
+
+
+Started GET "/todos" for ::1 at 2021-03-27 11:44:20 +0000
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/todos_controller.rb:7:in `index'
+Completed 200 OK in 14ms (Views: 6.6ms | ActiveRecord: 2.0ms | Allocations: 5355)
+
+
