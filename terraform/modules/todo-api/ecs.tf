@@ -1,7 +1,7 @@
 resource "aws_ecs_service" "todo_api_service" {
   name            = "todo_api_service"                                       
   cluster         = "${aws_ecs_cluster.todo_api_cluster.id}"            # Referencing our cluster
-  task_definition = "${aws_ecs_task_definition.todo_api_service.arn}"   # Referencing the task our service will spin up
+  task_definition = "${aws_ecs_task_definition.todo_api_task_definition.arn}"   # Referencing the task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 2 # Setting the number of containers we want deployed
   
@@ -15,8 +15,8 @@ resource "aws_ecs_cluster" "todo_api_cluster" {
   name = "todo_api_cluster"
 }
 
-resource "aws_ecs_task_definition" "todo_api_service" {
-  family                   = "todo_api_service"
+resource "aws_ecs_task_definition" "todo_api_task_definition" {
+  family                   = "todo_api_task_definition"
   container_definitions    = <<DEFINITION
   [
     {
