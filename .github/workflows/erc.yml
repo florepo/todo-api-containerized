@@ -5,12 +5,12 @@ on:
     branches: [ main ]
 
 env:
-  ECR_REPOSITORY: "todoapi/production/runner"     # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: "todoapi"     # set this to your Amazon ECR repository name
   ECS_SERVICE: "todo_api_service"                 # set this to your Amazon ECS service name
   # ECS_CLUSTER: "todo_api_cluster"                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: "todo_api_task_definition"   # set this to the path to your Amazon ECS task definition
   #                                                 # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG                        # set this to the name of the container in the
+  CONTAINER_NAME: $IMAGE_TAG                        # set this to the name of the container in the
   #                                                 # containerDefinitions section of your task definition
 
 defaults:
@@ -46,9 +46,9 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $CONTAINER_NAME .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY.Lowercase/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build -t 'test' .
+          docker push 'test'
+          echo "::set-output name=image::test"
 
       - name: Download task definition from AWS
         run: |
