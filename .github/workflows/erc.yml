@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  ECR_REPOSITORY: "todoapi"     # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: "repo"     # set this to your Amazon ECR repository name
   ECS_SERVICE: "todo_api_service"                 # set this to your Amazon ECS service name
   # ECS_CLUSTER: "todo_api_cluster"                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: "todo_api_task_definition"   # set this to the path to your Amazon ECS task definition
@@ -41,7 +41,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: $ECR_REPOSITORY
+          ECR_REPOSITORY: todoapi/production/runner
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
