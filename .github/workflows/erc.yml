@@ -67,6 +67,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-          service: $ECS_SERVICE
+          service: todo_api_service
           cluster: default
           wait-for-service-stability: true
