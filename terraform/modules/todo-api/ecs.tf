@@ -3,7 +3,7 @@ resource "aws_ecs_service" "todo_api_service" {
   cluster         = "${aws_ecs_cluster.todo_api_cluster.id}"            # Referencing our cluster
   task_definition = "${aws_ecs_task_definition.todo_api_task_definition.arn}"   # Referencing the task our service will spin up
   launch_type     = "FARGATE"
-  desired_count   = 2 # Setting the number of containers we want deployed
+  desired_count   = 1 # Setting the number of containers we want deployed
   
   network_configuration {
     subnets          = ["${aws_subnet.ecs_subnet_a.id}", "${aws_subnet.ecs_subnet_b.id}"]
