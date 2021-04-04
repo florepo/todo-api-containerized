@@ -42,7 +42,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: todoapi/production/runner
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: test
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -61,7 +61,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: service
-          image: $IMAGE_TAG
+          image: test
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
