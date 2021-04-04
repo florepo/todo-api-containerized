@@ -44,8 +44,8 @@ jobs:
           ECR_REPOSITORY: todoapi/production/runner
           IMAGE_TAG: test
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:test .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:test
 
       - name: Download task definition from AWS
         id: download-task
