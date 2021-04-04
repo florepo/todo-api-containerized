@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "todo_api_task_definition" {
   [
     {
       "name": "service",
-      "image": "${aws_ecr_repository.repo.repository_url}",
+      "image": "image",
       "essential": true,
       "portMappings": [
         {
