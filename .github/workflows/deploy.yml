@@ -43,6 +43,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           docker build -t $ECR_REGISTRY/todoapi_ecr_repo:latest .
+          docker push $ECR_REGISTRY/todoapi_ecr_repo:latest
+          echo "::set-output name=image::$ECR_REGISTRY/todoapi_ecr_repo:$IMAGE_TAG"
 
       - name: Confirm correct built of Docker Image
         env:
@@ -65,10 +67,12 @@ jobs:
       - name: Update and render ECS Task Definition
         id: update-and-render-container-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           task-definition: task-definition.json
           container-name: service
-          image: test
+          image: ${{ steps.build-image.outputs.image }}:latest
 
       - name: Deploy Task Definition to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
