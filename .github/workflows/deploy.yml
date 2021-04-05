@@ -1,0 +1,69 @@
+name: Deploy to Amazon ECS
+
+on:
+  push:
+    branches: [ main ]
+
+# env:
+#   ECR_REPOSITORY: "repo"     # set this to your Amazon ECR repository name
+#   ECS_SERVICE: "todo_api_service"                 # set this to your Amazon ECS service name
+#   # ECS_CLUSTER: "todo_api_cluster"                 # set this to your Amazon ECS cluster name
+#   ECS_TASK_DEFINITION: "todo_api_task_definition"   # set this to the path to your Amazon ECS task definition
+#   #                                                 # file, e.g. .aws/task-definition.json
+#   CONTAINER_NAME: $IMAGE_TAG                        # set this to the name of the container in the
+#   #                                                 # containerDefinitions section of your task definition
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Retrieve AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and tag and push Docker image to AWS ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          # ECR_REPOSITORY: todoapi_ecr_repo
+          # IMAGE_TAG: test
+        run: |
+          docker build -t $ECR_REGISTRY/todoapi_ecr_repo:test .
+          docker push $ECR_REGISTRY/todoapi_ecr_repo:test
+
+      - name: Download ECS Task Definition from AWS
+        id: download-task-definition
+        run: |
+          aws ecs describe-task-definition --task-definition todo_api_task_definition --query taskDefinition > task-definition.json
+
+      - name: Update and render ECS Task Definition
+        id: update-and-render-container-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: service
+          image: test
+
+      - name: Deploy Task Definition to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.update-and-render-container-definition.outputs.task-definition }}
+          service: todo_api_service
+          cluster: todo_api_cluster
+          wait-for-service-stability: true

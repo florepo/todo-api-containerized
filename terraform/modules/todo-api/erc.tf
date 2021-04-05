@@ -1,9 +1,9 @@
-resource "aws_ecr_repository" "repo" {
-  name = "todoapi/production/runner"
+resource "aws_ecr_repository" "todoapi_ecr_repo" {
+  name = "todoapi_ecr_repo"
 }
 
-resource "aws_ecr_lifecycle_policy" "repo-policy" {
-  repository = aws_ecr_repository.repo.name
+resource "aws_ecr_lifecycle_policy" "todoapi_ecr_repo_policy" {
+  repository = aws_ecr_repository.todoapi_ecr_repo.name
 
   policy = <<EOF
 {
