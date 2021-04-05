@@ -6,7 +6,6 @@ provider "aws" {
 
 resource "aws_s3_bucket" "terraform-state-backend" {
     bucket = "terraform-state-todo-api"
-    description = "stores terraform state file for application"
     acl    = "private"
     versioning {
       enabled = true

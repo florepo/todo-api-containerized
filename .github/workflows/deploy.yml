@@ -42,20 +42,20 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build -t $ECR_REGISTRY/todoapi_ecr_repo:test .
+          docker build -t $ECR_REGISTRY/todoapi_ecr_repo:latest .
 
       - name: Confirm correct built of Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker image inspect $ECR_REGISTRY/todoapi_ecr_repo:test
+          docker image inspect $ECR_REGISTRY/todoapi_ecr_repo:latest
 
       - name: Push Docker image to AWS ECR
         id: push-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker push $ECR_REGISTRY/todoapi_ecr_repo:test
+          docker push $ECR_REGISTRY/todoapi_ecr_repo:latest
 
       - name: Download ECS Task Definition from AWS
         id: download-task-definition
