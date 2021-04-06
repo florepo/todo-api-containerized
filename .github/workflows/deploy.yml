@@ -72,7 +72,8 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: service
-          image: ${{ steps.build-image.outputs.image }}:latest
+          image: 649471005469.dkr.ecr.eu-west-3.amazonaws.com/todoapi_ecr_repo
+          # image: ${{ steps.build-image.outputs.image }}:latest
 
       - name: Deploy Task Definition to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
