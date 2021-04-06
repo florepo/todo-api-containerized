@@ -29,8 +29,14 @@ resource "aws_ecs_task_definition" "todo_api_task_definition" {
           "hostPort": 3000
         }
       ],
-      "memory": 512,
-      "cpu": 256
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "awslogs-todoapi",
+          "awslogs-region": "eu-west-3",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ]
   DEFINITION
@@ -90,4 +96,8 @@ resource "aws_iam_role_policy" "ecr-access" {
 }
 EOF
 
+}
+
+resource "aws_cloudwatch_log_group" "dummyapi" {
+  name = "awslogs-todoapi"
 }
