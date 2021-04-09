@@ -81,32 +81,32 @@ GEM
     ffi (1.15.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.8.9)
+    i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.9.0)
+    loofah (2.9.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    marcel (1.0.0)
+    marcel (1.0.1)
     method_source (1.0.0)
-    mini_mime (1.0.3)
+    mini_mime (1.1.0)
     minitest (5.14.4)
     msgpack (1.4.2)
     nio4r (2.5.7)
-    nokogiri (1.11.2-x86_64-darwin)
+    nokogiri (1.11.3-x86_64-darwin)
       racc (~> 1.4)
     parallel (1.20.1)
-    parser (3.0.0.0)
+    parser (3.0.1.0)
       ast (~> 2.4.1)
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    puma (4.3.7)
+    puma (5.2.2)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -144,7 +144,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.1.1)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rspec-core (3.9.3)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.4)
@@ -162,7 +162,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.4)
-    rubocop (1.12.0)
+    rubocop (1.12.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -209,25 +209,25 @@ PLATFORMS
   x86_64-darwin-18
 
 DEPENDENCIES
-  bootsnap (>= 1.4.2)
+  bootsnap
   database_cleaner
   factory_bot_rails (~> 4.0)
   faker
   listen (>= 3.0.5, < 3.2)
   pry
-  puma (~> 4.1)
-  rails (~> 6.0.2, >= 6.0.2.2)
+  puma
+  rails (~> 6.0.2)
   rspec-rails (~> 3.5)
   rubocop-faker
   rubocop-rspec
   shoulda-matchers (~> 3.1)
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
+  sqlite3
   tzinfo-data
 
 RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   2.2.15
+   2.2.16
