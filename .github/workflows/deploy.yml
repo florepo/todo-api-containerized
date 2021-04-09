@@ -44,7 +44,7 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/todoapi_ecr_repo:latest .
           docker push $ECR_REGISTRY/todoapi_ecr_repo:latest
-          echo "::set-output name=image::$ECR_REGISTRY/todoapi_ecr_repo:$IMAGE_TAG"
+          echo "::set-output name=image::$ECR_REGISTRY/todoapi_ecr_repo:latest"
 
       - name: Confirm correct built of Docker Image
         env:
