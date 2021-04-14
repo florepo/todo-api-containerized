@@ -21,6 +21,8 @@ Bundler.require(*Rails.groups)
 
 module TodosApi
   class Application < Rails::Application
+
+    config.hosts << ".compute.amazonaws.com"
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
