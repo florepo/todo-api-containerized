@@ -6,8 +6,22 @@ resource "aws_ecs_service" "todo_api_service" {
   desired_count   = 1 # Setting the number of containers we want deployed
   
   network_configuration {
-    subnets          = ["${aws_subnet.ecs_subnet_a.id}", "${aws_subnet.ecs_subnet_b.id}"]
+    subnets          = [aws_subnet.ecs_subnet_a.id, aws_subnet.ecs_subnet_b.id]
     assign_public_ip = true # Providing our containers with public IPs
+    security_groups   = [aws_security_group.egress_all.id, aws_security_group.api_ingress.id,]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.production.arn
+    container_name   = "service"
+    container_port   = 3000
+  }
+
+  depends_on = [aws_lb_listener.http_forward, aws_iam_role_policy_attachment.ecs_task_execution_role_policy]
+
+  tags = {
+    Environment = "production"
+    Application = "todo_api"
   }
 }
 
