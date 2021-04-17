@@ -1,10 +1,11 @@
 resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 
-  tags = {
-    Name = "vpc"
-    Application = "todos-api"
-  }
+  tags = merge(local.default_tags,
+    {
+      Name      = "VPC"
+    }
+  )
 }
 
 resource "aws_subnet" "public-alb-a" {
@@ -14,10 +15,11 @@ resource "aws_subnet" "public-alb-a" {
 
   vpc_id = aws_vpc.default.id
 
-  tags = {
-    Env  = "production"
-    Name = "public-todos-api"
-  }
+  tags = merge(local.default_tags,
+    {
+      Name      = "ALB Subnet West-3a"
+    }
+  )
 }
 
 resource "aws_subnet" "public-alb-b" {

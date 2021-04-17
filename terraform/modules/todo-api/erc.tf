@@ -1,5 +1,11 @@
 resource "aws_ecr_repository" "todoapi_ecr_repo" {
   name = "todoapi_ecr_repo"
+
+  tags = merge(local.default_tags,
+    {
+      Name      = "ECR Repo"
+    }
+  )
 }
 
 resource "aws_ecr_lifecycle_policy" "todoapi_ecr_repo_policy" {

@@ -4,7 +4,7 @@ resource "aws_ecs_service" "todo_api_service" {
   task_definition = "${aws_ecs_task_definition.todo_api_task_definition.arn}"   # Referencing the task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 1 # Setting the number of containers we want deployed
-  
+
   network_configuration {
     subnets          = [aws_subnet.ecs_subnet_a.id, aws_subnet.ecs_subnet_b.id]
     assign_public_ip = true # Providing our containers with public IPs
@@ -19,10 +19,11 @@ resource "aws_ecs_service" "todo_api_service" {
 
   depends_on = [aws_lb_listener.http_forward, aws_iam_role_policy_attachment.ecs_task_execution_role_policy]
 
-  tags = {
-    Environment = "production"
-    Application = "todo_api"
-  }
+  tags = merge(local.default_tags,
+    {
+      Name      = "ECS Service"
+    }
+  )
 }
 
 resource "aws_ecs_cluster" "todo_api_cluster" {
@@ -83,9 +84,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 }
 
 resource "aws_iam_role_policy" "ecr-access" {
-
   name = "ecs-access"
-
   role = aws_iam_role.ecs_task_execution_role.name
 
   policy = <<EOF
@@ -109,7 +108,6 @@ resource "aws_iam_role_policy" "ecr-access" {
   ]
 }
 EOF
-
 }
 
 resource "aws_cloudwatch_log_group" "dummyapi" {
