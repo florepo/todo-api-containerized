@@ -8,7 +8,10 @@ resource "aws_ecs_service" "todo_api_service" {
   network_configuration {
     subnets          = [aws_subnet.ecs_subnet_a.id, aws_subnet.ecs_subnet_b.id]
     assign_public_ip = true # Providing our containers with public IPs
-    security_groups   = [aws_security_group.egress_all.id, aws_security_group.api_ingress.id,]
+    security_groups   = [
+      aws_security_group.ingress_api.id,
+      aws_security_group.egress_all.id,
+    ]
   }
 
   load_balancer {

@@ -1,8 +1,15 @@
 resource "aws_lb" "production" {
   name               = "alb"
   load_balancer_type = "application"
-  subnets            = [aws_subnet.public-alb-a.id, aws_subnet.public-alb-b.id]
-  security_groups    = [aws_security_group.alb.id]
+  subnets            = [
+    aws_subnet.public-alb-a.id,
+    aws_subnet.public-alb-b.id
+  ]
+  security_groups   = [
+    aws_security_group.ingress_http.id,
+    aws_security_group.ingress_api.id,
+    aws_security_group.egress_all.id,
+  ]
 
   tags = merge(local.default_tags,
     {
