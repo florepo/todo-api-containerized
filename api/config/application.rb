@@ -21,6 +21,10 @@ Bundler.require(*Rails.groups)
 
 module ChargyBackend
   class Application < Rails::Application
+
+    # Allow AWS hosts
+    config.hosts << ".amazonaws.com"
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
