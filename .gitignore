@@ -11,6 +11,7 @@
 */.vscode/
 *.vscode/
 
+*log
 
 # Ignore bundler config.
 /.bundle

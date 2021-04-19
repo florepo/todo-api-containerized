@@ -215,20 +215,21 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bootsnap (>= 1.4.2)
+  bootsnap
   factory_bot_rails
   faker
-  octokit (~> 4.0)
+  listen
+  octokit
   puma
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.1)
   rails-controller-testing
-  rspec-rails (~> 3.7)
+  rspec-rails
   shoulda
   shoulda-callback-matchers
   simplecov
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   sqlite3
   tzinfo-data
 
